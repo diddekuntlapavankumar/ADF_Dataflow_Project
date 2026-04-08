@@ -1,0 +1,9 @@
+{
+	"name": "dpavanadfproject",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "84dd9c5a-ccdb-4ff6-a0f2-c81220aacdfe",
+		"tenantId": "1c00043c-77d0-4125-ab5a-a486bcc0d7bf"
+	}
+}
