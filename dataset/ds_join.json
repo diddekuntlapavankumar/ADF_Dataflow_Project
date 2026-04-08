@@ -1,0 +1,23 @@
+{
+	"name": "ds_join",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Adls_1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "noutput1",
+				"fileSystem": "noutput"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
