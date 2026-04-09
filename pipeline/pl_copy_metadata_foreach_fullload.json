@@ -115,17 +115,7 @@
 							"outputs": [
 								{
 									"referenceName": "azure_sqlserver_output",
-									"type": "DatasetReference",
-									"parameters": {
-										"sqlschema": {
-											"value": "@item().Inputcontainer",
-											"type": "Expression"
-										},
-										"sqltablename": {
-											"value": "@item().Inputdirectory",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
