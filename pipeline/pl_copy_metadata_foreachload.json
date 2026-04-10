@@ -1,5 +1,5 @@
 {
-	"name": "pl_copy_metadata_foreach_fullload",
+	"name": "pl_copy_metadata_foreachload",
 	"properties": {
 		"activities": [
 			{
