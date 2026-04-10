@@ -1,5 +1,5 @@
 {
-	"name": "pl_copy_metadata_fullload",
+	"name": "pl_copy_metadata_datalake_to_sqlserver_foreachload",
 	"properties": {
 		"activities": [
 			{
