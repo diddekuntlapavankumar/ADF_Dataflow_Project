@@ -78,9 +78,15 @@
 									}
 								},
 								"sink": {
-									"type": "AzureSqlSink",
-									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
 								},
 								"enableStaging": false,
 								"translator": {
@@ -114,8 +120,22 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "azure_sqlserver_output",
-									"type": "DatasetReference"
+									"referenceName": "ds_datalake_output",
+									"type": "DatasetReference",
+									"parameters": {
+										"containername": {
+											"value": "@item().Outputcontainer",
+											"type": "Expression"
+										},
+										"directoryname": {
+											"value": "@item().Outputdirectory",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@item().Outputfile",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}

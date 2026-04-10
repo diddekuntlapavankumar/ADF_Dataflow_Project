@@ -6,10 +6,10 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"conatinername": {
+			"containername": {
 				"type": "string"
 			},
-			"direvctoryname": {
+			"directoryname": {
 				"type": "string"
 			},
 			"filename": {
@@ -26,11 +26,11 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().direvctoryname",
+					"value": "@dataset().directoryname",
 					"type": "Expression"
 				},
 				"fileSystem": {
-					"value": "@dataset().conatinername",
+					"value": "@dataset().containername",
 					"type": "Expression"
 				}
 			},
