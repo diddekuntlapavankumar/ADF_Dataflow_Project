@@ -11,13 +11,22 @@
 		"Adls_2_accountKey": {
 			"value": ""
 		},
+		"Adls_3_accountKey": {
+			"value": ""
+		},
 		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_password": {
 			"value": ""
 		},
 		"Adls_1_properties_typeProperties_url": {
 			"value": "https://bronzeadlsstorage.dfs.core.windows.net/"
 		},
 		"Adls_2_properties_typeProperties_url": {
+			"value": "https://bronzeadlsstorage.dfs.core.windows.net/"
+		},
+		"Adls_3_properties_typeProperties_url": {
 			"value": "https://bronzeadlsstorage.dfs.core.windows.net/"
 		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
@@ -30,6 +39,15 @@
 			"value": "Sample"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "sql"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_server": {
+			"value": "dpavan.database.windows.net"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_database": {
+			"value": "Sample"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
 			"value": "sql"
 		},
 		"containerUri": {
