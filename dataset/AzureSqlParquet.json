@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlDatabase",
+	"name": "AzureSqlParquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase2",
