@@ -51,12 +51,14 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSqlParquet",
+						"referenceName": "AzureSqlDatabase",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2026-04-13T06:01:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -1,0 +1,17 @@
+{
+	"name": "AzureSqlDatabase",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "nyc_taxi_auto"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -115,6 +115,8 @@
 				"defaultValue": "biostats.csv"
 			}
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2026-04-10T04:58:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }
