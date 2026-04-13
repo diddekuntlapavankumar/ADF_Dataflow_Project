@@ -45,6 +45,7 @@
 						"value": "@activity('Lookup_metadata_files').output.value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Copydata_datalake_datalake",
@@ -132,6 +133,46 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "Stored procedure1",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Copydata_datalake_datalake",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[loggingfirstcopy]",
+								"storedProcedureParameters": {
+									"firstcopystatus": {
+										"value": {
+											"value": "@activity('Copydata_datalake_datalake').status",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"firstcopysourcefile": {
+										"value": "@item().Inputfile",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSqlDatabase2",
+								"type": "LinkedServiceReference"
+							}
 						}
 					]
 				}
@@ -229,6 +270,46 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "Stored procedure2",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Copydata_datalake_sqlserver",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[loggingsecondcopy]",
+								"storedProcedureParameters": {
+									"secondcopystatus": {
+										"value": {
+											"value": "@activity('Copydata_datalake_sqlserver').status",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"secondcopysourcefile": {
+										"value": "@item().Outputfile",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSqlDatabase2",
+								"type": "LinkedServiceReference"
+							}
 						}
 					]
 				}
