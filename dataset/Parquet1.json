@@ -1,0 +1,21 @@
+{
+	"name": "Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Adls_3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "yellow_tripdata_2023-01.parquet",
+				"folderPath": "rinput1",
+				"fileSystem": "rinput"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
