@@ -164,7 +164,10 @@
 										"type": "String"
 									},
 									"firstcopysourcefile": {
-										"value": "@item().Inputfile",
+										"value": {
+											"value": "@item().Inputfile",
+											"type": "Expression"
+										},
 										"type": "String"
 									}
 								}
@@ -301,7 +304,10 @@
 										"type": "String"
 									},
 									"secondcopysourcefile": {
-										"value": "@item().Outputfile",
+										"value": {
+											"value": "@item().Outputfile",
+											"type": "Expression"
+										},
 										"type": "String"
 									}
 								}
@@ -316,7 +322,7 @@
 			}
 		],
 		"annotations": [],
-		"lastPublishTime": "2026-04-13T06:01:57Z"
+		"lastPublishTime": "2026-04-15T04:09:28Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
