@@ -80,7 +80,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select *from dbo.sales where modified_date>@activity('Lookup_get_oldwatermark').output.firstRow.watermarkvalue and modified_date <= @activity('Lookup_get_newwatermark').output.newwatermark",
+							"value": "SELECT *\nFROM dbo.sales\nWHERE modified_date > '@{activity('Lookup_get_oldwatermark').output.firstRow.watermarkvalue}'\nAND modified_date <= '@{activity('Lookup_get_newwatermark').output.firstRow.newwatermark}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -142,8 +142,12 @@
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[update_watermark]",
 					"storedProcedureParameters": {
-						"undefined": {
-							"value": ""
+						"newwatermark": {
+							"value": {
+								"value": "@{activity('Lookup_get_newwatermark').output.firstRow.newwatermark}\n",
+								"type": "Expression"
+							},
+							"type": "Datetime"
 						}
 					}
 				},
@@ -155,8 +159,6 @@
 			{
 				"name": "Copydata_datalake_to_sqlserver",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Stored procedure_update_oldwatermark_with_newwatermark",
@@ -174,8 +176,51 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"sales_id"
+							]
+						},
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_datalakecopy",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sinkfordeltaload",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []

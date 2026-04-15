@@ -1,0 +1,34 @@
+{
+	"name": "ds_sinkfordeltaload",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "customer_id",
+				"type": "varchar"
+			},
+			{
+				"name": "created_date",
+				"type": "date"
+			},
+			{
+				"name": "modified_date",
+				"type": "date"
+			},
+			{
+				"name": "sales_id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "sales"
+		}
+	}
+}
