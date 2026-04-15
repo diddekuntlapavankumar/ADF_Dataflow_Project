@@ -20,6 +20,9 @@
 		"AzureSqlDatabase2_password": {
 			"value": ""
 		},
+		"AzureSqlDatabase3_password": {
+			"value": ""
+		},
 		"Adls_1_properties_typeProperties_url": {
 			"value": "https://bronzeadlsstorage.dfs.core.windows.net/"
 		},
@@ -48,6 +51,15 @@
 			"value": "Sample"
 		},
 		"AzureSqlDatabase2_properties_typeProperties_userName": {
+			"value": "sql"
+		},
+		"AzureSqlDatabase3_properties_typeProperties_server": {
+			"value": "dpavan.database.windows.net"
+		},
+		"AzureSqlDatabase3_properties_typeProperties_database": {
+			"value": "sink-sql-db-2397216"
+		},
+		"AzureSqlDatabase3_properties_typeProperties_userName": {
 			"value": "sql"
 		}
 	}
