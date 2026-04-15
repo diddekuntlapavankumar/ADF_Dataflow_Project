@@ -1,0 +1,27 @@
+{
+	"name": "ds_datalakecopy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Adls_3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "delta.csv",
+				"folderPath": {
+					"value": "@formatdatetime(utcnow(),'dd-mm-yyyy')",
+					"type": "Expression"
+				},
+				"fileSystem": "output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
