@@ -14,6 +14,9 @@
 		"Adls_3_accountKey": {
 			"value": ""
 		},
+		"AzureDatabricksDeltaLake1_accessToken": {
+			"value": ""
+		},
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
