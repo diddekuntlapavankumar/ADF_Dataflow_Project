@@ -10,12 +10,12 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"inputcontainername": "dinput",
-					"inputdirectoryname": "dev",
-					"inputfilename": "customers.csv",
-					"outputcontainername": "einput",
-					"outputdirectoryname": "raw",
-					"outputfilename": "customers.csv"
+					"inputcontainername": "tinput",
+					"inputdirectoryname": "folder",
+					"inputfilename": "airtravel.csv",
+					"outputcontainername": "ooutput",
+					"outputdirectoryname": "ooutput1",
+					"outputfilename": "biostats.csv"
 				}
 			}
 		],
