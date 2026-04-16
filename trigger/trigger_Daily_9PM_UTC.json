@@ -2,7 +2,7 @@
 	"name": "trigger_Daily_9PM_UTC",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -20,18 +20,10 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Day",
-				"interval": 1,
+				"frequency": "Minute",
+				"interval": 2,
 				"startTime": "2026-04-15T15:59:00",
-				"timeZone": "India Standard Time",
-				"schedule": {
-					"minutes": [
-						0
-					],
-					"hours": [
-						22
-					]
-				}
+				"timeZone": "India Standard Time"
 			}
 		}
 	}
