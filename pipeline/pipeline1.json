@@ -1,0 +1,92 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_datalake1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_datalake2",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"inputcontainername": {
+				"type": "string",
+				"defaultValue": "dinput"
+			},
+			"inputdirectoryname": {
+				"type": "string",
+				"defaultValue": "dev"
+			},
+			"inputfilename": {
+				"type": "string",
+				"defaultValue": "customers.csv"
+			},
+			"outputcontainername": {
+				"type": "string",
+				"defaultValue": "einput"
+			},
+			"outputdirectoryname": {
+				"type": "string",
+				"defaultValue": "raw"
+			},
+			"outputfilename": {
+				"type": "string",
+				"defaultValue": "customers.csv"
+			}
+		},
+		"annotations": []
+	}
+}

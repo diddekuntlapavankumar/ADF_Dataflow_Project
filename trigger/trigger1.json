@@ -1,0 +1,32 @@
+{
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline1",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"inputcontainername": "dinput",
+					"inputdirectoryname": "dev",
+					"inputfilename": "customers.csv",
+					"outputcontainername": "einput",
+					"outputdirectoryname": "raw",
+					"outputfilename": "customers.csv"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 2,
+				"startTime": "2026-04-16T16:34:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
