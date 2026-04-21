@@ -6,16 +6,16 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pl_copy_Trigger",
+					"referenceName": "pl_copy_Trigger1",
 					"type": "PipelineReference"
 				},
 				"parameters": {
 					"inputcontainer": "dinput",
-					"inputdirectory": "test",
-					"inputfilename": "employees.csv",
+					"inputdirectory": "dev",
+					"inputfilename": "customers.csv",
 					"outputcontainer": "einput",
-					"outputdirectory": "test",
-					"outputfilename": "employees.csv"
+					"outputdirectory": "raw",
+					"outputfilename": "customers.csv"
 				}
 			}
 		],
