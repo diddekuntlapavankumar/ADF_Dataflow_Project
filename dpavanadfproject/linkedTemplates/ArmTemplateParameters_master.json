@@ -65,24 +65,6 @@
 		"AzureSqlDatabase3_properties_typeProperties_userName": {
 			"value": "sql"
 		},
-		"trigger1_properties_pl_copy_Trigger_parameters_inputcontainer": {
-			"value": "dinput"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_inputdirectory": {
-			"value": "test"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_inputfilename": {
-			"value": "employees.csv"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_outputcontainer": {
-			"value": "einput"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_outputdirectory": {
-			"value": "test"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_outputfilename": {
-			"value": "employees.csv"
-		},
 		"containerUri": {
 			"value": ""
 		},

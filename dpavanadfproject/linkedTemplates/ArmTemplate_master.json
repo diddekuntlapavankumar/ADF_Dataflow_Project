@@ -87,30 +87,6 @@
 			"type": "string",
 			"defaultValue": "sql"
 		},
-		"trigger1_properties_pl_copy_Trigger_parameters_inputcontainer": {
-			"type": "string",
-			"defaultValue": "dinput"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_inputdirectory": {
-			"type": "string",
-			"defaultValue": "test"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_inputfilename": {
-			"type": "string",
-			"defaultValue": "employees.csv"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_outputcontainer": {
-			"type": "string",
-			"defaultValue": "einput"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_outputdirectory": {
-			"type": "string",
-			"defaultValue": "test"
-		},
-		"trigger1_properties_pl_copy_Trigger_parameters_outputfilename": {
-			"type": "string",
-			"defaultValue": "employees.csv"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -235,24 +211,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"trigger1_properties_pl_copy_Trigger_parameters_inputcontainer": {
-						"value": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_inputcontainer')]"
-					},
-					"trigger1_properties_pl_copy_Trigger_parameters_inputdirectory": {
-						"value": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_inputdirectory')]"
-					},
-					"trigger1_properties_pl_copy_Trigger_parameters_inputfilename": {
-						"value": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_inputfilename')]"
-					},
-					"trigger1_properties_pl_copy_Trigger_parameters_outputcontainer": {
-						"value": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_outputcontainer')]"
-					},
-					"trigger1_properties_pl_copy_Trigger_parameters_outputdirectory": {
-						"value": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_outputdirectory')]"
-					},
-					"trigger1_properties_pl_copy_Trigger_parameters_outputfilename": {
-						"value": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_outputfilename')]"
 					}
 				}
 			},
