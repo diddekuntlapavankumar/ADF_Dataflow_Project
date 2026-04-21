@@ -1,0 +1,32 @@
+{
+	"name": "ds_datalake_input_trigger",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Adls_3",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"containername": {
+				"type": "string"
+			},
+			"directoryname": {
+				"type": "string"
+			},
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
