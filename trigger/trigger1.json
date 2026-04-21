@@ -3,22 +3,7 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "pipeline1",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"inputcontainername": "tinput",
-					"inputdirectoryname": "folder",
-					"inputfilename": "airtravel.csv",
-					"outputcontainername": "ooutput",
-					"outputdirectoryname": "ooutput1",
-					"outputfilename": "biostats.csv"
-				}
-			}
-		],
+		"pipelines": [],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
