@@ -86,6 +86,30 @@
 		"AzureSqlDatabase3_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sql"
+		},
+		"trigger1_properties_pl_copy_Trigger_parameters_inputcontainer": {
+			"type": "string",
+			"defaultValue": "dinput"
+		},
+		"trigger1_properties_pl_copy_Trigger_parameters_inputdirectory": {
+			"type": "string",
+			"defaultValue": "test"
+		},
+		"trigger1_properties_pl_copy_Trigger_parameters_inputfilename": {
+			"type": "string",
+			"defaultValue": "employees.csv"
+		},
+		"trigger1_properties_pl_copy_Trigger_parameters_outputcontainer": {
+			"type": "string",
+			"defaultValue": "einput"
+		},
+		"trigger1_properties_pl_copy_Trigger_parameters_outputdirectory": {
+			"type": "string",
+			"defaultValue": "test"
+		},
+		"trigger1_properties_pl_copy_Trigger_parameters_outputfilename": {
+			"type": "string",
+			"defaultValue": "employees.csv"
 		}
 	},
 	"variables": {
@@ -2762,6 +2786,247 @@
 				"[concat(variables('factoryId'), '/datasets/ds_department')]",
 				"[concat(variables('factoryId'), '/datasets/ds_employee')]",
 				"[concat(variables('factoryId'), '/datasets/ds_join')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_datalake_input_trigger')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Adls_3",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"containername": {
+						"type": "string"
+					},
+					"directoryname": {
+						"type": "string"
+					},
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Adls_3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_datalake_output_trigger')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Adls_3",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"containername": {
+						"type": "string"
+					},
+					"directoryname": {
+						"type": "string"
+					},
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Adls_3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_Trigger')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_datalake_input_trigger",
+								"type": "DatasetReference",
+								"parameters": {
+									"containername": {
+										"value": "@pipeline().parameters.inputcontainer",
+										"type": "Expression"
+									},
+									"directoryname": {
+										"value": "@pipeline().parameters.inputdirectory",
+										"type": "Expression"
+									},
+									"filename": {
+										"value": "@pipeline().parameters.inputfilename",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_datalake_output_trigger",
+								"type": "DatasetReference",
+								"parameters": {
+									"containername": {
+										"value": "@pipeline().parameters.outputcontainer",
+										"type": "Expression"
+									},
+									"directoryname": {
+										"value": "@pipeline().parameters.outputdirectory",
+										"type": "Expression"
+									},
+									"filename": {
+										"value": "@pipeline().parameters.outputfilename",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"inputcontainer": {
+						"type": "string",
+						"defaultValue": "dinput"
+					},
+					"inputdirectory": {
+						"type": "string",
+						"defaultValue": "dev"
+					},
+					"inputfilename": {
+						"type": "string",
+						"defaultValue": "customers.csv"
+					},
+					"outputcontainer": {
+						"type": "string",
+						"defaultValue": "einput"
+					},
+					"outputdirectory": {
+						"type": "string",
+						"defaultValue": "raw"
+					},
+					"outputfilename": {
+						"type": "string",
+						"defaultValue": "customers.csv"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_datalake_input_trigger')]",
+				"[concat(variables('factoryId'), '/datasets/ds_datalake_output_trigger')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pl_copy_Trigger",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"inputcontainer": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_inputcontainer')]",
+							"inputdirectory": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_inputdirectory')]",
+							"inputfilename": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_inputfilename')]",
+							"outputcontainer": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_outputcontainer')]",
+							"outputdirectory": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_outputdirectory')]",
+							"outputfilename": "[parameters('trigger1_properties_pl_copy_Trigger_parameters_outputfilename')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 15,
+						"startTime": "2026-04-21T15:15:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pl_copy_Trigger')]"
 			]
 		}
 	]
