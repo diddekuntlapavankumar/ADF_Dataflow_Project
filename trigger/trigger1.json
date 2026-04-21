@@ -1,0 +1,32 @@
+{
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_copy_Trigger",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"inputcontainer": "dinput",
+					"inputdirectory": "test",
+					"inputfilename": "employees.csv",
+					"outputcontainer": "einput",
+					"outputdirectory": "test",
+					"outputfilename": "employees.csv"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2026-04-21T15:31:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
