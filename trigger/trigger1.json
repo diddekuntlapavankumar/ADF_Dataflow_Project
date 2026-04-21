@@ -9,12 +9,6 @@
 					"referenceName": "pl_copy_trigger1",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "pl_copy_trigger2",
-					"type": "PipelineReference"
-				}
 			}
 		],
 		"type": "ScheduleTrigger",
