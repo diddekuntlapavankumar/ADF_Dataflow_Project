@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pl_copy_trigger",
+					"referenceName": "pl_copy_trigger1",
 					"type": "PipelineReference"
 				}
 			}
