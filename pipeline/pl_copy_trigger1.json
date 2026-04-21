@@ -90,32 +90,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"inputcontainer": {
-				"type": "string",
-				"defaultValue": "dinput"
-			},
-			"inputdirectory": {
-				"type": "string",
-				"defaultValue": "dev"
-			},
-			"inputfilename": {
-				"type": "string",
-				"defaultValue": "customers.csv"
-			},
-			"outputcontainer": {
-				"type": "string",
-				"defaultValue": "einput"
-			},
-			"outputdirectory": {
-				"type": "string",
-				"defaultValue": "raw"
-			},
-			"outputfilename": {
-				"type": "string",
-				"defaultValue": "customers.csv"
-			}
-		},
 		"annotations": []
 	}
 }

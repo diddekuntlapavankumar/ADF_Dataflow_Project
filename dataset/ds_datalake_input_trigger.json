@@ -5,17 +5,6 @@
 			"referenceName": "Adls_3",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"containername": {
-				"type": "string"
-			},
-			"directoryname": {
-				"type": "string"
-			},
-			"filename": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

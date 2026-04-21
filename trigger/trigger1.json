@@ -8,14 +8,6 @@
 				"pipelineReference": {
 					"referenceName": "pl_copy_trigger1",
 					"type": "PipelineReference"
-				},
-				"parameters": {
-					"inputcontainer": "dinput",
-					"inputdirectory": "test",
-					"inputfilename": "employees.csv",
-					"outputcontainer": "einput",
-					"outputdirectory": "test",
-					"outputfilename": "employees.csv"
 				}
 			},
 			{
@@ -34,7 +26,7 @@
 				"timeZone": "India Standard Time",
 				"schedule": {
 					"minutes": [
-						38
+						45
 					],
 					"hours": [
 						22
