@@ -15,8 +15,61 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_datalake_trigger_input",
+						"type": "DatasetReference",
+						"parameters": {
+							"containername": "dinput",
+							"directoryname": "dev",
+							"filename": "customers.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_datalake_trigger_output",
+						"type": "DatasetReference",
+						"parameters": {
+							"containername": "einput",
+							"directoryname": "raw",
+							"filename": "customers.csv"
+						}
+					}
+				]
 			}
 		],
 		"annotations": []
