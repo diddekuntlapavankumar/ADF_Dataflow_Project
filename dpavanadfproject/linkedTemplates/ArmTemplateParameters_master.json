@@ -65,6 +65,12 @@
 		"AzureSqlDatabase3_properties_typeProperties_userName": {
 			"value": "sql"
 		},
+		"tumbling_window_trigger_properties_pipeline_parameters_startdate": {
+			"value": "@trigger().output.windowstarttime"
+		},
+		"tumbling_window_trigger_properties_pipeline_parameters_enddate": {
+			"value": "@trigger().output.windowendtime"
+		},
 		"containerUri": {
 			"value": ""
 		},

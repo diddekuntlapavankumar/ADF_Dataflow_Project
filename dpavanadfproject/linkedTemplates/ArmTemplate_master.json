@@ -87,6 +87,14 @@
 			"type": "string",
 			"defaultValue": "sql"
 		},
+		"tumbling_window_trigger_properties_pipeline_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "@trigger().output.windowstarttime"
+		},
+		"tumbling_window_trigger_properties_pipeline_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "@trigger().output.windowendtime"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -211,6 +219,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"tumbling_window_trigger_properties_pipeline_parameters_startdate": {
+						"value": "[parameters('tumbling_window_trigger_properties_pipeline_parameters_startdate')]"
+					},
+					"tumbling_window_trigger_properties_pipeline_parameters_enddate": {
+						"value": "[parameters('tumbling_window_trigger_properties_pipeline_parameters_enddate')]"
 					}
 				}
 			},
