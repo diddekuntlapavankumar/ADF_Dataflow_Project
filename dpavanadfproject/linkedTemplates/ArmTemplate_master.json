@@ -95,6 +95,14 @@
 			"type": "string",
 			"defaultValue": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
 		},
+		"pipelinedailytrigger_properties_pipeline2_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
+		},
+		"pipelinedailytrigger_properties_pipeline2_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -219,17 +227,43 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'dpavanadfproject_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "dpavanadfproject_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate": {
 						"value": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate')]"
 					},
 					"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate": {
 						"value": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate')]"
+					},
+					"pipelinedailytrigger_properties_pipeline2_parameters_startdate": {
+						"value": "[parameters('pipelinedailytrigger_properties_pipeline2_parameters_startdate')]"
+					},
+					"pipelinedailytrigger_properties_pipeline2_parameters_enddate": {
+						"value": "[parameters('pipelinedailytrigger_properties_pipeline2_parameters_enddate')]"
 					}
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'dpavanadfproject_ArmTemplate_1')]"
+				"[resourceId('Microsoft.Resources/deployments', 'dpavanadfproject_ArmTemplate_2')]"
 			]
 		}
 	]
