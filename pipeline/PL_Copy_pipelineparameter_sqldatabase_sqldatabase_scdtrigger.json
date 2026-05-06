@@ -1,5 +1,5 @@
 {
-	"name": "PL_Copy_pipelineparameter_sqldatabase_sqldatabase",
+	"name": "PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger",
 	"properties": {
 		"activities": [
 			{
