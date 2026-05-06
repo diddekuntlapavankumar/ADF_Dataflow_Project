@@ -1,5 +1,5 @@
 {
-	"name": "PL_Copy_pipeline_Employee_Data",
+	"name": "PL_Copy_pipelineparameter_sqldatabase_sqldatabase",
 	"properties": {
 		"activities": [
 			{
@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT *\nFROM dbo.EmployeeSource\nWHERE CreatedDate >= '@{pipeline().parameters.startdate}'\nAND CreatedDate < '@{pipeline().parameters.enddate}'",
+						"sqlReaderQuery": {
+							"value": "SELECT *\nFROM dbo.EmployeeSource\nWHERE CreatedDate >= '@{pipeline().parameters.startdate}'\nAND CreatedDate < '@{pipeline().parameters.enddate}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

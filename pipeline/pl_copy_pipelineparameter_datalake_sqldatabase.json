@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "pl_copy_pipelineparameter_datalake_sqldatabase",
 	"properties": {
 		"activities": [
 			{
