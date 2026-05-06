@@ -1,0 +1,25 @@
+{
+	"name": "TRG_FileUpload",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_Copy_CustomerData_event_trigger",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/pacontainer/blobs/pacontainer",
+			"blobPathEndsWith": "customer_data2.txt",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/4e1cb213-da1f-482f-8451-90b7378304e4/resourceGroups/Resource_group_dev/providers/Microsoft.Storage/storageAccounts/bronzeadlsstorage",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
