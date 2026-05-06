@@ -87,6 +87,14 @@
 			"type": "string",
 			"defaultValue": "sql"
 		},
+		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
+		},
+		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -211,6 +219,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate": {
+						"value": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate')]"
+					},
+					"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate": {
+						"value": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate')]"
 					}
 				}
 			},

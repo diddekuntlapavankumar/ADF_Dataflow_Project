@@ -86,6 +86,14 @@
 		"AzureSqlDatabase3_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sql"
+		},
+		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
+		},
+		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
 		}
 	},
 	"variables": {
@@ -93,7 +101,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CopyCustomerData')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CopyCustomerData_scdtrigger')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3005,11 +3013,11 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "PL_CopyCustomerData",
+							"referenceName": "PL_CopyCustomerData_scdtrigger",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
@@ -3026,7 +3034,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_CopyCustomerData')]"
+				"[concat(variables('factoryId'), '/pipelines/PL_CopyCustomerData_scdtrigger')]"
 			]
 		},
 		{
@@ -3112,6 +3120,199 @@
 				"[concat(variables('factoryId'), '/datasets/ds_department')]",
 				"[concat(variables('factoryId'), '/datasets/ds_employee')]",
 				"[concat(variables('factoryId'), '/datasets/ds_join')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_Copy_pipeline_Employee_Data')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT *\nFROM dbo.EmployeeSource\nWHERE CreatedDate >= '@{pipeline().parameters.startdate}'\nAND CreatedDate < '@{pipeline().parameters.enddate}'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_employee_source_input",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_employee_target_output",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"startdate": {
+						"type": "string",
+						"defaultValue": "2026-05-05"
+					},
+					"enddate": {
+						"type": "string",
+						"defaultValue": "2026-05-06"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_employee_source_input')]",
+				"[concat(variables('factoryId'), '/datasets/ds_employee_target_output')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_employee_source_input')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EmployeeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EmployeeName",
+						"type": "varchar"
+					},
+					{
+						"name": "Salary",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CreatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "EmployeeSource"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_employee_target_output')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EmployeeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EmployeeName",
+						"type": "varchar"
+					},
+					{
+						"name": "Salary",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CreatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "EmployeeTarget"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipelinedailytrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PL_Copy_pipeline_Employee_Data",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"startdate": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate')]",
+							"enddate": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 5,
+						"startTime": "2026-05-06T16:00:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_Copy_pipeline_Employee_Data')]"
 			]
 		}
 	]

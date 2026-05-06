@@ -64,6 +64,12 @@
 		},
 		"AzureSqlDatabase3_properties_typeProperties_userName": {
 			"value": "sql"
+		},
+		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate": {
+			"value": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
+		},
+		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate": {
+			"value": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
 		}
 	}
 }
