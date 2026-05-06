@@ -65,17 +65,20 @@
 		"AzureSqlDatabase3_properties_typeProperties_userName": {
 			"value": "sql"
 		},
-		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate": {
+		"pipelinedailytrigger_properties_PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger_parameters_startdate": {
 			"value": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
 		},
-		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate": {
+		"pipelinedailytrigger_properties_PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger_parameters_enddate": {
 			"value": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
 		},
-		"pipelinedailytrigger_properties_pipeline2_parameters_startdate": {
+		"pipelinedailytrigger_properties_pl_copy_pipelineparameter_datalake_sqldatabase_scdtrigger_parameters_startdate": {
 			"value": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
 		},
-		"pipelinedailytrigger_properties_pipeline2_parameters_enddate": {
+		"pipelinedailytrigger_properties_pl_copy_pipelineparameter_datalake_sqldatabase_scdtrigger_parameters_enddate": {
 			"value": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
+		},
+		"TRG_FileUpload_properties_typeProperties_scope": {
+			"value": "/subscriptions/4e1cb213-da1f-482f-8451-90b7378304e4/resourceGroups/Resource_group_dev/providers/Microsoft.Storage/storageAccounts/bronzeadlsstorage"
 		}
 	}
 }

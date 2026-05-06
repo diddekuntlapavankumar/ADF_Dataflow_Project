@@ -7,27 +7,175 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "dpavanadfproject"
 		},
-		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate": {
+		"pipelinedailytrigger_properties_PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger_parameters_startdate": {
 			"type": "string",
 			"defaultValue": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
 		},
-		"pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate": {
+		"pipelinedailytrigger_properties_PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger_parameters_enddate": {
 			"type": "string",
 			"defaultValue": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
 		},
-		"pipelinedailytrigger_properties_pipeline2_parameters_startdate": {
+		"pipelinedailytrigger_properties_pl_copy_pipelineparameter_datalake_sqldatabase_scdtrigger_parameters_startdate": {
 			"type": "string",
 			"defaultValue": "@formatDateTime(addDays(trigger().scheduledTime,-1),'yyyy-MM-dd')"
 		},
-		"pipelinedailytrigger_properties_pipeline2_parameters_enddate": {
+		"pipelinedailytrigger_properties_pl_copy_pipelineparameter_datalake_sqldatabase_scdtrigger_parameters_enddate": {
 			"type": "string",
 			"defaultValue": "@formatDateTime(trigger().scheduledTime,'yyyy-MM-dd')"
+		},
+		"TRG_FileUpload_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/4e1cb213-da1f-482f-8451-90b7378304e4/resourceGroups/Resource_group_dev/providers/Microsoft.Storage/storageAccounts/bronzeadlsstorage"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_Copy_CustomerData_event_trigger')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_customer_datalake_event_trigger_input",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_customer_sqldatabase_event_trigger_output",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_dataflow')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"department": {},
+									"employee": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2026-04-08T10:11:55Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DailyTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PL_CopyCustomerData_scdtrigger",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 5,
+						"startTime": "2026-05-06T15:00:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pipelinedailytrigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
@@ -38,22 +186,22 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "PL_Copy_pipeline_Employee_Data",
+							"referenceName": "PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger",
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"startdate": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_startdate')]",
-							"enddate": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipeline_Employee_Data_parameters_enddate')]"
+							"startdate": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger_parameters_startdate')]",
+							"enddate": "[parameters('pipelinedailytrigger_properties_PL_Copy_pipelineparameter_sqldatabase_sqldatabase_scdtrigger_parameters_enddate')]"
 						}
 					},
 					{
 						"pipelineReference": {
-							"referenceName": "pipeline2",
+							"referenceName": "pl_copy_pipelineparameter_datalake_sqldatabase_scdtrigger",
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"startdate": "[parameters('pipelinedailytrigger_properties_pipeline2_parameters_startdate')]",
-							"enddate": "[parameters('pipelinedailytrigger_properties_pipeline2_parameters_enddate')]"
+							"startdate": "[parameters('pipelinedailytrigger_properties_pl_copy_pipelineparameter_datalake_sqldatabase_scdtrigger_parameters_startdate')]",
+							"enddate": "[parameters('pipelinedailytrigger_properties_pl_copy_pipelineparameter_datalake_sqldatabase_scdtrigger_parameters_enddate')]"
 						}
 					}
 				],
@@ -68,6 +216,37 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TRG_FileUpload')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PL_Copy_CustomerData_event_trigger",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/pacontainer/blobs/pacontainer",
+					"blobPathEndsWith": "customer_data2.txt",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('TRG_FileUpload_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_Copy_CustomerData_event_trigger')]"
+			]
 		}
 	]
 }
