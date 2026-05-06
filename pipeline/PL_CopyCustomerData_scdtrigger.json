@@ -1,5 +1,5 @@
 {
-	"name": "PL_CopyCustomerData",
+	"name": "PL_CopyCustomerData_scdtrigger",
 	"properties": {
 		"activities": [
 			{

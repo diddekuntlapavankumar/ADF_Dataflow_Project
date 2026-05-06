@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "PL_CopyCustomerData",
+					"referenceName": "PL_CopyCustomerData_scdtrigger",
 					"type": "PipelineReference"
 				}
 			}
