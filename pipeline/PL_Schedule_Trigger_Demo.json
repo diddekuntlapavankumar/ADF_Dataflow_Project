@@ -1,0 +1,77 @@
+{
+	"name": "PL_Schedule_Trigger_Demo",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_datalake_trigger_input",
+						"type": "DatasetReference",
+						"parameters": {
+							"containername": "dinput",
+							"directoryname": "dev",
+							"filename": "customers.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_datalake_trigger_output",
+						"type": "DatasetReference",
+						"parameters": {
+							"containername": "einput",
+							"directoryname": "raw",
+							"filename": "customers.csv"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
